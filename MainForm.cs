@@ -153,17 +153,15 @@ namespace LabWork_06_OpenGL
             float cameraY = 5.0f - angle * 0.1f; // Анимация отдаления камеры по оси Y
 
             gl.LookAt(cameraY, 0.0f, 0.0f,  // Положение камеры (над плоскостью XZ)
-               cameraY, -1.0f, 0.0f,  // Камера смотрит на центр координат
-               1.0f, 0.0f, 0.0f); // Направление вниз
+                      cameraY, -1.0f, 0.0f,  // Камера смотрит на центр координат
+                      1.0f, 0.0f, 0.0f); // Направление вниз
 
-            //gl.Rotate(angle, 0.0f, 1.0f, 0.0f);
-
+            gl.Disable(OpenGL.GL_TEXTURE_2D); // Выключаем текстуры перед отрисовкой моделей
 
             foreach (var model in objects)
             {
                 foreach (var mtl in model.Value.Mtls)
                 {
-
                     if (mtl.UseColor)
                     {
                         gl.Color(mtl.Color);
@@ -172,20 +170,20 @@ namespace LabWork_06_OpenGL
                     gl.Begin(OpenGL.GL_TRIANGLES);
                     foreach (var polygon in mtl.Polygons)
                     {
+                        // Предварительные вычисления
                         Vertex v1 = vertices[polygon.Item1];
                         Vertex v2 = vertices[polygon.Item2];
                         Vertex v3 = vertices[polygon.Item3];
 
+                        // Отрисовка треугольника
                         gl.Vertex(v1.X, v1.Y, v1.Z);
                         gl.Vertex(v2.X, v2.Y, v2.Z);
                         gl.Vertex(v3.X, v3.Y, v3.Z);
-
                     }
                     gl.End();
-                    gl.Disable(OpenGL.GL_TEXTURE_2D);
                 }
             }
-            angle += 1f;
+            angle += 1f; // Увеличиваем угол для анимации
         }
     }
 
