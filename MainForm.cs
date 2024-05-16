@@ -18,15 +18,6 @@ namespace LabWork_06_OpenGL
         private List<Vector2> texCoords = new List<Vector2>();
         private float angle = 0.0f;
 
-        // Добавьте переменные для отслеживания положения мыши
-        private int lastMouseX, lastMouseY;
-        private bool isMouseDragging = false;
-
-        // Добавьте переменные для отслеживания углов обзора камеры
-        private float angleX = 0.0f;
-        private float angleY = 0.0f;
-        private const float sensitivity = 0.05f; // Чувствительность перемещения мыши
-
         public MainForm()
         {
             InitializeComponent();
@@ -159,11 +150,13 @@ namespace LabWork_06_OpenGL
         {
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
 
-            gl.LookAt(0.0f, 0.0f, 0.0f,  // Положение камеры (над плоскостью XZ)
-               0.0f, -1.0f, 0.0f,  // Камера смотрит на центр координат
-               1.0f, 0.0f, -1.0f); // Направление вниз
+            float cameraY = 5.0f - angle * 0.1f; // Анимация отдаления камеры по оси Y
 
-            gl.Rotate(angle, 0.0f, 1.0f, 0.0f);
+            gl.LookAt(cameraY, 0.0f, 0.0f,  // Положение камеры (над плоскостью XZ)
+               cameraY, -1.0f, 0.0f,  // Камера смотрит на центр координат
+               1.0f, 0.0f, 0.0f); // Направление вниз
+
+            //gl.Rotate(angle, 0.0f, 1.0f, 0.0f);
 
 
             foreach (var model in objects)
@@ -193,69 +186,6 @@ namespace LabWork_06_OpenGL
                 }
             }
             angle += 1f;
-        }
-
-        // Обработчик события нажатия кнопки мыши
-        private void OpenGLControl_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                lastMouseX = e.X;
-                lastMouseY = e.Y;
-                isMouseDragging = true;
-            }
-        }
-
-        // Обработчик события отпускания кнопки мыши
-        private void OpenGLControl_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                isMouseDragging = false;
-            }
-        }
-
-        // Обработчик события перемещения мыши
-        private void OpenGLControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isMouseDragging)
-            {
-                int deltaX = e.X - lastMouseX;
-                int deltaY = e.Y - lastMouseY;
-
-                // Инвертируем управление по оси
-                deltaX *= -1;
-                deltaY *= -1;
-
-                // Изменяем углы обзора камеры в зависимости от перемещения мыши
-                angleX += deltaX * sensitivity;
-                angleY += deltaY * sensitivity;
-
-                // Ограничиваем угол Y от -90 до 90 градусов, чтобы предотвратить переворот камеры
-                angleY = Math.Max(Math.Min(angleY, 90), -90);
-
-                // Применяем изменения к матрице просмотра (view matrix)
-                // Вызовите функцию, которая обновляет матрицу просмотра с учетом новых углов обзора
-                UpdateViewMatrix();
-
-                // Перерисуйте сцену после обновления углов обзора
-                openGLControl.Invalidate();
-            }
-        }
-
-        // Функция для обновления матрицы просмотра (view matrix) с учетом углов обзора камеры
-        private void UpdateViewMatrix()
-        {
-            var gl = openGLControl.OpenGL;
-            gl.MatrixMode(OpenGL.GL_MODELVIEW);
-            gl.LoadIdentity();
-
-            // Перемещение камеры в начало координат
-            gl.Translate(0.0f, 0.0f, -2.0f);
-
-            // Поворот камеры вокруг осей X и Y
-            gl.Rotate(angleX, 0.0f, 1.0f, 0.0f);
-            gl.Rotate(angleY, 1.0f, 0.0f, 0.0f);
         }
     }
 

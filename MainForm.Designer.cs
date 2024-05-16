@@ -47,9 +47,6 @@
             openGLControl.TabIndex = 0;
             openGLControl.OpenGLDraw += openGLControl_OpenGLDraw;
             openGLControl.Load += MainForm_Load;
-            openGLControl.MouseDown += OpenGLControl_MouseDown;
-            openGLControl.MouseMove += OpenGLControl_MouseMove;
-            openGLControl.MouseUp += OpenGLControl_MouseUp;
             // 
             // MainForm
             // 
