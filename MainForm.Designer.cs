@@ -28,20 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
+            openGLControl = new SharpGL.OpenGLControl();
+            ((System.ComponentModel.ISupportInitialize)openGLControl).BeginInit();
             SuspendLayout();
+            // 
+            // openGLControl
+            // 
+            openGLControl.AutoSize = true;
+            openGLControl.Dock = DockStyle.Fill;
+            openGLControl.DrawFPS = false;
+            openGLControl.Location = new Point(0, 0);
+            openGLControl.Margin = new Padding(4, 3, 4, 3);
+            openGLControl.Name = "openGLControl";
+            openGLControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            openGLControl.RenderContextType = SharpGL.RenderContextType.DIBSection;
+            openGLControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
+            openGLControl.Size = new Size(1096, 662);
+            openGLControl.TabIndex = 0;
+            openGLControl.OpenGLDraw += openGLControl_OpenGLDraw;
+            openGLControl.Load += MainForm_Load;
+            openGLControl.MouseDown += OpenGLControl_MouseDown;
+            openGLControl.MouseMove += OpenGLControl_MouseMove;
+            openGLControl.MouseUp += OpenGLControl_MouseUp;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1096, 662);
+            Controls.Add(openGLControl);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "LabWork_06_OpenGL";
             Load += MainForm_Load;
+            ((System.ComponentModel.ISupportInitialize)openGLControl).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private SharpGL.OpenGLControl openGLControl;
     }
 }
