@@ -11,7 +11,7 @@ namespace LabWork_06_OpenGL
 {
     public partial class MainForm : Form
     {
-        private string filePath = "E:\\Study\\ComputerGraphics\\ComputerGraphics\\OpenGL\\blinded_cats_logo.obj";
+        private string filePath = "E:\\Study\\ComputerGraphics\\ComputerGraphics\\OpenGL\\blinded_cats_logo_black_opengl.obj";
 
         private Dictionary<string, ObjectData> objects = new Dictionary<string, ObjectData>();
         private List<Vertex> vertices = new List<Vertex>();
@@ -108,17 +108,14 @@ namespace LabWork_06_OpenGL
                                 mtl.UseColor = true;
                                 switch (parts[1].Split("_")[1])
                                 {
-                                    case "cat":
-                                        mtl.Color = Color.FromArgb(0x5E5876);
+                                    case "black":
+                                        mtl.Color = Color.Black;
                                         break;
-                                    case "second":
-                                        mtl.Color = Color.FromArgb(0xDBDBDB);
+                                    case "red":
+                                        mtl.Color = Color.Red;
                                         break;
-                                    case "crossbar":
-                                        mtl.Color = Color.FromArgb(0x82ADD3);
-                                        break;
-                                    case "tile":
-                                        mtl.Color = Color.FromArgb(0x606F72);
+                                    case "white":
+                                        mtl.Color = Color.White;
                                         break;
                                     case "ears":
                                         mtl.Color = Color.FromArgb(0xFF9A9C);
